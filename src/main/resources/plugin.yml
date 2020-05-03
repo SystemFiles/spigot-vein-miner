@@ -1,0 +1,8 @@
+name: VeinMiner
+version: ${project.version}
+main: ca.sykesdev.veinminer.VeinMiner
+api-version: 1.13
+prefix: VeinMiner
+authors: [Systemx86, SystemFiles]
+description: Allows players to break entire vein of ores while mining one single ore in that vein. Very fun :)
+website: sykesdev.ca
