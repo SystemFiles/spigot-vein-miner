@@ -6,7 +6,6 @@ import org.bukkit.block.BlockFace;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 public class OreAPI {
@@ -35,30 +34,30 @@ public class OreAPI {
         // Block instantiation..
     }
 
-    public static Set<Block> getVein(Block ore) {
-        Set<Block> connectedOres = new HashSet<>();
+    /**
+     * Will get all the connected ores in a vein of ores
+     * @param ore The starting ore
+     * @return The set of ores connected to the start (or in the vein)
+     */
+    public static Set<Block> getAllConnected(Block ore) {
+        Set<Block> results = new HashSet<>();
         LinkedList<Block> queue = new LinkedList<>();
-
         queue.add(ore);
 
-        while((ore = queue.poll()) != null) {
-            getConnectedOres(ore, connectedOres, queue);
-        }
-        return connectedOres;
-    }
+        Block current = queue.poll();
+        while (current != null) {
+            for (BlockFace face : faces) {
+                Block connected = current.getRelative(face);
 
-    private static void getConnectedOres(Block ore, Set<Block> connected, List<Block> pending) {
-        Set<Block> results = connected;
-
-        for (BlockFace face : faces) {
-            Block b = ore.getRelative(face);
-
-            if (b.getType() == ore.getType()) {
-                if (results.add(b)) {
-                    pending.add(b);
+                if (connected.getType() == ore.getType()) {
+                    if (results.add(connected)) {
+                        queue.add(connected);
+                    }
                 }
             }
+            current = queue.poll();
         }
+        return results;
     }
 
 }

@@ -6,3 +6,8 @@ prefix: VeinMiner
 authors: [Systemx86, SystemFiles]
 description: Allows players to break entire vein of ores while mining one single ore in that vein. Very fun :)
 website: sykesdev.ca
+
+commands:
+  veinminer:
+    description: The core command for controlling veinminer
+    usage: /veinminer [ enable | disable ]
