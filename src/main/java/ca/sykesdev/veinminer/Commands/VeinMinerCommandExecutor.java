@@ -14,6 +14,14 @@ public class VeinMinerCommandExecutor implements CommandExecutor {
         this.plugin = plugin;
     }
 
+    /**
+     * Allows user to enable and disable features of this plugin with commands in-game/console
+     * @param sender Sender of command
+     * @param command The command being sent
+     * @param label The label for this command (same as command.getName())
+     * @param args Any arguments passed with command
+     * @return True iff command was successful!
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("veinminer")) {

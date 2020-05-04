@@ -10,6 +10,9 @@ import java.util.Set;
 
 public class OreAPI {
 
+    /**
+     * Contains all the references for every block face to check
+     */
     private static final BlockFace[] faces = {
             BlockFace.UP,
             BlockFace.DOWN,
@@ -19,6 +22,9 @@ public class OreAPI {
             BlockFace.SOUTH
     };
 
+    /**
+     * Contains all allowed Block Types to perform vein destroy on
+     */
     public static final Material[] oreTypes = {
             Material.COAL_ORE,
             Material.IRON_ORE,

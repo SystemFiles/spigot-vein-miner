@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class VeinMiner extends JavaPlugin {
 
+    // Determine whether or not to enable features of this plugin
     private boolean pluginEnabled = true;
 
     @Override
@@ -23,10 +24,18 @@ public final class VeinMiner extends JavaPlugin {
         this.getServer().getConsoleSender().sendMessage(Message.formatMessage("Plugin deactivated... Bye bye!"));
     }
 
+    /**
+     * Get enabled status
+     * @return If plugin features allowed
+     */
     public boolean getPluginEnabled() {
         return pluginEnabled;
     }
 
+    /**
+     * Set enabled status
+     * @param enabled The new enabled status
+     */
     public void setPluginEnabled(boolean enabled) {
         pluginEnabled = enabled;
     }

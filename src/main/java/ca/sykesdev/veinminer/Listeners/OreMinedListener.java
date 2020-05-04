@@ -14,12 +14,22 @@ import java.util.List;
 
 public class OreMinedListener implements Listener {
 
+    // Instance of plugin
     private VeinMiner plugin;
 
+    /**
+     * Constructor for OreMinedListener
+     * @param plugin The plugin instance
+     */
     public OreMinedListener(VeinMiner plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Handles every time the player breaks a block in the world and checks if it
+     * is a valid block and the plugin features are allowed, as well as valid gamemode
+     * @param event The event being triggered (BlockBreakEvent in this case)
+     */
     @EventHandler(ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         Block broken = event.getBlock();
