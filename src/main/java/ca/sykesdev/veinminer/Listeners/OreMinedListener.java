@@ -14,7 +14,7 @@ import java.util.*;
 
 public class OreMinedListener implements Listener {
 
-    private final Map<Material, Integer> oreExpMap = new HashMap<>();
+    private Map<Material, Integer> oreExpMap = new HashMap<>();
 
     // Instance of plugin
     private VeinMiner plugin;
@@ -25,14 +25,6 @@ public class OreMinedListener implements Listener {
      */
     public OreMinedListener(VeinMiner plugin) {
         this.plugin = plugin;
-
-        // Map all ores for exp drop amounts
-        oreExpMap.put(Material.COAL_ORE, 2);
-        oreExpMap.put(Material.REDSTONE_ORE, 5);
-        oreExpMap.put(Material.LAPIS_ORE, 5);
-        oreExpMap.put(Material.EMERALD_ORE, 7);
-        oreExpMap.put(Material.DIAMOND_ORE, 7);
-        oreExpMap.put(Material.NETHER_QUARTZ_ORE, 7);
     }
 
     /**
@@ -42,6 +34,15 @@ public class OreMinedListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
+        // Map all ores for exp drop amounts
+        oreExpMap.put(Material.COAL_ORE, 2);
+        oreExpMap.put(Material.REDSTONE_ORE, 5);
+        oreExpMap.put(Material.LAPIS_ORE, 5);
+        oreExpMap.put(Material.EMERALD_ORE, 7);
+        oreExpMap.put(Material.DIAMOND_ORE, 7);
+        oreExpMap.put(Material.NETHER_QUARTZ_ORE, 7);
+
+        // Get the ore that was broken
         Block broken = event.getBlock();
         List<Material> validBlocks = Arrays.asList(OreAPI.oreTypes);
 
@@ -50,16 +51,19 @@ public class OreMinedListener implements Listener {
                 && this.plugin.getPluginEnabled()
                 && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
 
-            // Loop through all connected blocks and break them naturally
-            Set<Block> connectedBlocks = OreAPI.getAllConnected(broken);
-            for (Block b : connectedBlocks) {
-                b.breakNaturally();
-                int expAmount = oreExpMap.get(b.getType());
+            Set<Block> connectedOres = OreAPI.getAllConnected(broken);
 
-                // Spawn exp orb for number of blocks
-                ExperienceOrb orb = b.getWorld().spawn(b.getLocation()
+            // Drop EXP if xp ore
+            if (oreExpMap.containsKey(broken.getType())) {
+                ExperienceOrb orb = broken.getWorld().spawn(broken.getLocation()
                         .add(0.5, 0.5, 0.5), ExperienceOrb.class);
-                orb.setExperience(expAmount * connectedBlocks.size());
+                orb.setExperience(oreExpMap.get(broken.getType()) * connectedOres.size());
+            }
+
+            // Loop through all connected blocks and break them naturally
+            for (Block b : connectedOres) {
+                // Break the connected ore
+                b.breakNaturally();
             }
         }
     }
